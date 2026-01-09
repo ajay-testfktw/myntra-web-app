@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Helper\ApiResponseHelper;
 use App\Models\User;
 use App\Repository\UsermanagementRepository;
+use Exception;
 
 class UsermanagementService
 {
@@ -15,8 +17,10 @@ class UsermanagementService
 
     public function register(array $data): User
     {
-        return $this->usermanagementRepository->register($data);
+        try {
+            return $this->usermanagementRepository->register($data);
+        } catch (Exception $th) {
+            throw new Exception($th->getMessage());
+        }
     }
-
-    private function sendVerificationEmail(string $email): void {}
 }
